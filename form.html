@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey Form</title>
+  <style>
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-control {
+      margin-bottom: 10px;
+    }
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Survey Form</h1>
+    <form id="survey-form">
+      <div class="form-control">
+        <label for="first-name">First Name:</label>
+        <input type="text" id="first-name" required>
+      </div>
+      <div class="form-control">
+        <label for="last-name">Last Name:</label>
+        <input type="text" id="last-name" required>
+      </div>
+      <div class="form-control">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="form-control">
+        <label for="country">Country:</label>
+        <select id="country" required>
+          <option disabled selected>Select a country</option>
+          <option>United States</option>
+          <option>United Kingdom</option>
+          <option>Canada</option>
+          <option>Australia</option>
+        </select>
+      </div>
+      <div class="form-control">
+        <label>Gender:</label><br>
+        <input type="checkbox" id="male" name="gender">
+        <label for="male">Male</label><br>
+        <input type="checkbox" id="female" name="gender">
+        <label for="female">Female</label><br>
+        <input type="checkbox" id="other" name="gender">
+        <label for="other">Other</label>
+      </div>
+      <div class="form-control">
+        <label for="profession">Profession:</label>
+        <input type="text" id="profession" required>
+      </div>
+      <div class="form-control">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-control">
+        <label for="mobile-number">Mobile Number:</label>
+        <input type="tel" id="mobile-number" pattern="[0-9]{10}" required>
+      </div>
+      <div class="button-container">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('survey-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var firstName = document.getElementById('first-name').value;
+      var lastName = document.getElementById('last-name').value;
+      var dob = document.getElementById('dob').value;
+      var country = document.getElementById('country').value;
+      var gender = Array.from(document.querySelectorAll('input[name="gender"]:checked'))
+        .map(function(element) {
+          return element.labels[0].innerHTML;
+        })
+        .join(', ');
+      var profession = document.getElementById('profession').value;
+      var email = document.getElementById('email').value;
+      var mobileNumber = document.getElementById('mobile-number').value;
+
+      var surveyData = {
+        "First Name": firstName,
+        "Last Name": lastName,
+        "Date of Birth": dob,
+        "Country": country,
+        "Gender": gender,
+        "Profession": profession,
+        "Email": email,
+        "Mobile Number": mobileNumber
+      };
+
+      showPopup(surveyData);
+    });
+
+    document.querySelector('button[type="reset"]').addEventListener('click', function() {
+      document.getElementById('survey-form').reset();
+    });
+
+    
